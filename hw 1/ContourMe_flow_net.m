@@ -34,6 +34,7 @@ for row = 1:Ny
         Grid(row,col) = func( complex( X(col), Y(row) ) );
     end
 end
+
 Bmax=max(imag(Grid));
 Bmin=min(imag(Grid));
 Cmax=max(Bmax);
