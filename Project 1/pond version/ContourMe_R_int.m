@@ -77,4 +77,6 @@ hold on
 x= [44,70,70,44,44];
 y= [142,142,135,135,142];
 plot(x,real(y),'k', 'LineWidth', 2)
-hold on 
+hold on
+set(gca,'FontSize',30)
+

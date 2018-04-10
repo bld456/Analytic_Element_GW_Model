@@ -47,7 +47,7 @@ Cmax=max(Bmax);
 Cmin=min(Bmin);
 D=Cmax-Cmin;
 nintr=round(D/del);
-
+set(gca,'FontSize',30)
 figure;
 hold on
 %contour(X, Y,real(Grid),nintr,'r');
@@ -95,6 +95,8 @@ x= [44,70,70,44,44];
 y= [142,142,135,135,142];
 plot(x,real(y),'k', 'LineWidth', 2)
 hold on 
+set(gca,'FontSize',30)
+
 %hold on
 %contour(X, Y,real(Grid),nintr);
 %contour(X, Y,imag(Grid),nint);
