@@ -1,0 +1,14 @@
+function [A] = Populate_A(LS_end,LS_c)
+    
+    height=length(LS_end);
+    width=length(LS_end)+1);
+    A=nan(height,width);
+    A=(:,width)=
+    for m=1:height
+        for j=1:width
+           if j=width
+               A(,j)
+        end
+    end
+    
+end
