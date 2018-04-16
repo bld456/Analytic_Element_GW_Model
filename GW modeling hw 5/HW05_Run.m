@@ -18,7 +18,7 @@ LS_end=[zs,0;0,ze]; %endpoints of each line sink
 
 zw = [d+1i*d;-d+1i*d;-d-1i*d;d-1i*d];
 Q = [800;00;00;00 ];
-rw = [0.1;0.1;.1;.1];
+rw = [0.3;0.1;.1;.1];
 
 
 b = Populate_b(Phi_M,Qx0,LS_c,alpha, zw,rw,Q );
