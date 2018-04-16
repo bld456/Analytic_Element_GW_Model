@@ -1,0 +1,19 @@
+classdef river
+    %RIVER Summary of this class goes here
+    %   Detailed explanation goes here
+    
+    properties
+        name 
+        nodes
+        head_specified_points
+        L
+        sigma
+        
+     
+    end
+    
+    methods
+    end
+    
+end
+

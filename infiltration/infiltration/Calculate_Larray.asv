@@ -1,7 +1,0 @@
-function [L] = Calculate_L(z_list)
-L=[]    
-for i = 1:length(z) -1
-    L(i)=sqrt( (real(z(i))-real((i+1))^2 +(imag((i))-imag((i+1)))^2);
-  
-end
-
