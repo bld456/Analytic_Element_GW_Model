@@ -10,16 +10,19 @@ classdef river < handle
         sigma
         midpoints
         potential
+        
     end
     
     methods
-%         function Omega = Omega_river(obj,z)
-%         Zarray = Calculate_Zarray(z,obj.nodes)
-%         Omega = [];
-%         for j= 1:length(Zarray)
-%         Omega(j) = Omega + obj.sigma(j)*LS(Zarray(j),obj.Larray(j));
-%         end
-%         end
+        
+        function Omega = Omega_river(obj,z)
+          Zarray = Calculate_Zarray(z,obj.nodes);
+          Omega = [];
+          
+          for j= 1:length(Zarray)
+            Omega(j) =  obj.sigma(j)*LS(Zarray(j),obj.Larray(j));
+           end
+        end
         
         
     end

@@ -31,8 +31,15 @@ classdef Regional_model < handle
         reference_points;
         obj.potential_specified_points =cat(1,river_points, reference_points) ;
           
-        %need to implement rest of emelents
+        %need to implement lakes and 
        
+        end
+        
+        function num = num_sinks(obj)
+            num = 0;
+            for j = 1:length(obj.rivers)
+                num = num + length(obj.rivers(j).midpoints);
+            end
         end
         
        
