@@ -13,10 +13,9 @@ classdef LineSink < handle
     
     methods
         %%%%%%%%%%%
-        function obj = LineSink(z1,z2,PhiM)
+        function obj = LineSink(z1,z2)
           obj.z1 = z1;
           obj.z2 = z2;
-          obj.PhiM = PhiM;
           obj.L = obj.Calculate_L(obj.z1, obj.z2);
           obj.mp = obj.Calculate_midpoint ;
         end

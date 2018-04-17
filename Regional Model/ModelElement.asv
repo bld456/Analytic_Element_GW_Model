@@ -1,0 +1,63 @@
+classdef ModelElement < handle
+    %ELEMENT Summary of this class goes here
+    %   Detailed explanation goes here
+    
+    properties
+    
+    LineSinks
+    n
+    Phi
+    end
+    
+    methods
+        %%%%%%%%
+        function obj = ModelElement(filename)
+                
+         nodes =  nodes_from_CSV(filename);
+         obj.n = length(nodes )-1;
+         
+          
+         obj.LineSinks = LineSink.empty(obj.n,0); %row vector
+         for j = 1:obj.n
+           
+          obj.LineSinks(j)= LineSink(nodes(j),nodes(j+1));
+         end
+        end
+        
+        
+        
+        %%%%%%%
+        function subdivide(obj, factor)
+            if factor > 1 && rem(factor,1 ==0)
+                
+                newSinks = LineSink.empty(obj.n * factor,0);
+                newN = obj.b * factor;
+                newSinks_index = 1;
+                for j = 1:obj.n
+                    z1= LineSinks(j).z1;
+                    z2 = LineSinks(j).z2;
+                    pt = line_division(z1,z2,factor)
+                    for k 1:factor
+                        if k ==1 
+                        newSinks(newSinks_index) = LineSink(z1,pt)
+                        else
+                        newSinks(newSinks_index) = LineSink(pt*(k-1),pt*k)
+
+                        end
+                        newSinks_index = newSinks_index +1 ;
+                        
+                            
+                    end
+                    
+                end
+                obj.n = factor;
+                obj.LineSinks = 
+            
+            else
+             'invalid factor'
+            end
+         
+        end
+    
+    end
+end
