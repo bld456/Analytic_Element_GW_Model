@@ -5,7 +5,7 @@ nRows = model.nSinks +1;
 nColumns = model.nSinks +1;
 A =zeros (nRows,nColumns);
 
-sinks = model.Sinks() ;%uggo
+%uggo
 
 
 
@@ -16,11 +16,11 @@ for r = 1:nRows
         elseif r == nRows
                 z = refZ;
                 
-                A(r,c) =real(sinks(c).Omega(z)) ;
+                A(r,c) =real(model.Sinks(c).Omega(z)) ;
             
         else
-            z = sinks(r).mp;
-            A(r,c) =real(sinks(c).Omega(z)) ;
+            z = model.Sinks(r).mp;
+            A(r,c) =real(model.Sinks(c).Omega(z)) ;
             
         end
     end

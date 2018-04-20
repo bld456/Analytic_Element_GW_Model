@@ -3,7 +3,7 @@ d=100;
 zs=-2*d;
 ze=2*d;
 Qx0=0.4;
-%Qx0=0;
+Qx0=0;
 z0=1000;
 fi0=25;
 Phi0=.5*k*fi0^2;
@@ -17,7 +17,7 @@ alpha = 0; %angle of uniform flow relative to vertical
 LS_end=[zs,0;0,ze]; %endpoints of each line sink
 
 zw = [d+1i*d;-d+1i*d;-d-1i*d;d-1i*d];
-Q = [800;00;00;00 ];
+Q = [00;00;00;00 ];
 rw = [0.3;0.1;.1;.1];
 
 

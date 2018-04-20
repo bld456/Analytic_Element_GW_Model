@@ -11,6 +11,7 @@ classdef Model < handle
         Elements
         Rivers
         Lakes
+        Sinks
         
     end
     
@@ -33,6 +34,7 @@ classdef Model < handle
            obj.nSinks = obj.nSinks + river.n;
            obj.nElements = obj.nElements +1;
            obj.Elements(obj.nElements) = river; 
+           obj.Sinks = obj.listSinks();
         end 
         
         function addLake(obj,lake)
@@ -41,6 +43,8 @@ classdef Model < handle
              obj.nSinks = obj.nSinks + lake.n;
              obj.nElements = obj.nElements +1;
              obj.Elements(obj.nElements) = lake; 
+             obj.Sinks = obj.listSinks();
+
 
         %%need function that divides line sinks in entire model and updates
         %%nSinks
@@ -48,7 +52,7 @@ classdef Model < handle
         
         end
         
-        function sinks = Sinks(obj)
+        function sinks = listSinks(obj)
             
             sinks = LineSink.empty(obj.nSinks,0);
             counter = 1;

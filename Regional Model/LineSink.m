@@ -43,24 +43,26 @@ classdef LineSink < handle
         
         
         %%%%%%%%%%%
-        function Omega = Omega(obj, z, simga )
+        function omega = Omega(obj, z, sigma )
            
             Z = obj.Calculate_Z(z);
             switch nargin 
                 case 3
-                    
                 case 2
                     sigma = 1;
                 
-                  
+            end     
             if abs(Z+1)<10^-5 || abs(Z-1) <10^-5
-                Omega = 0;
+                omega = 0;
+                                    
+
             else
-                Omega = obj.L/(4*pi) * sigma* ((Z+1)*log(Z+1)-(Z-1)*log(Z-1)-2);
+                omega = obj.L/(4*pi) * sigma* ((Z+1)*log(Z+1)-(Z-1)*log(Z-1)-2);
+                                    
             end
             
         %%%%
-            end
+            
             
         end
         
