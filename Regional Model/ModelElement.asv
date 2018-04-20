@@ -1,4 +1,4 @@
-classdef ModelElement < handle &  matlab.mixin.Heterogeneous
+classdef ModelElement < handle
     %ELEMENT Summary of this class goes here
     %   Detailed explanation goes here
     
