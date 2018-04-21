@@ -43,8 +43,8 @@ disp('click each point to be transformed, hit enter when you are done')
 map_scale = sqrt((scale_x(1) - scale_x(2))^2 +(scale_y(1) - scale_y(2))^2);
 
 scale_factor = scale/map_scale;
-x= (x-ref_x )*scale_factor + real(refrence_point)
-y= (ref_y-y )*scale_factor + imag(refrence_point) %ymax occurs at the bottom of the axis, xmax is at the far right
+x= (x-ref_x )*scale_factor + real(refrence_point);
+y= (ref_y-y )*scale_factor + imag(refrence_point) ;%ymax occurs at the bottom of the axis, xmax is at the far right
 
 points = x + y*1i; % scale_value/map_value;
 end

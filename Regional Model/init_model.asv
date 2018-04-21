@@ -23,10 +23,8 @@ refz = 1000;
 
 
 %river = River('Data Collection//mississippi.csv')
-mississippi = River('mississippi.csv');
-minnesota = River('minnesota.csv');
-hiawatha = Lake('hiawatha.csv');
-nokomis = Lake ('nokomis.csv');
+river = River('test.csv')
+
 river.setPhi(0);
 model.addRiver(river);
 
@@ -39,7 +37,7 @@ A = Populate_A(model,refz);
 
 s= A\b;
 
-ContourMe_flow_net(481000,489000 , 200, 4869000, 4982000, 200, @(z)Omega_total(z,model,s),30);
+ContourMe_flow_net(-481000,400 , 200, -400, 400, 200, @(z)Omega_total(z,model,s),30);
 
 
 %make omega total
