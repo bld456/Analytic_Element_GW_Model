@@ -41,15 +41,21 @@ for r = 1:nLakes
         
          Omega_wells = Omega_wells + wells(w).Omega(model.Sinks(c).mp); 
     end
-    
-    B(c,1) = real(model.Sinks(c).PhiM - Omega_wells); %%where there might need to be a change depending on my understanding of the algorithm?
+    B(c,1) = real(model.Sinks(c).PhiM - Omega_wells) ;%%where there might need to be a change depending on my understanding of the algorithm?
     c = c+1;
    end
 end
 
 
+ Omega_wells = 0;
 
-B(c ,1 ) = real(refPhi - wells(w).Omega(refZ));
+    for w = 1:nWells
+        
+         Omega_wells = Omega_wells + wells(w).Omega(refZ); 
+    end
+
+
+B(c ,1 ) = real(refPhi -Omega_wells);
 c = c+1;
 
 
