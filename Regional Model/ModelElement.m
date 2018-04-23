@@ -22,6 +22,7 @@ classdef ModelElement < handle &  matlab.mixin.Heterogeneous
            
           obj.LineSinks(j)= LineSink(nodes(j),nodes(j+1));
          end
+        obj.Phi = 0; 
         end
         %%%%%%%
         

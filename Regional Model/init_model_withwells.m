@@ -7,13 +7,12 @@
 
 model = Model();
  river = River('river1.csv');
-river.setPhi(26*26*.5*10 );
+river.setPhi(0 );
  model.addRiver(river);
 
 
 lake = Lake('lake1.csv');
 model.addLake(lake);
-lake.setPhi(25*25*.5*10 );
 
 
 well1 =Well(6000,300,300,.3);
