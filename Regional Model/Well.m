@@ -6,13 +6,14 @@ classdef Well
         Q
         zw
         rw
+        Phi
         
       
     end
     
     methods
-        function obj = Well(Q,xw,yw,rw)
-            obj.Q = Q;
+        function obj = Well(Phi,xw,yw,rw)
+            obj.Phi = Phi;
             obj.zw = xw+ 1i*yw;
             obj.rw = rw;
             
@@ -24,9 +25,9 @@ classdef Well
         function omega = Omega(obj,z)
             rsq=(z-obj.zw)*conj(z-obj.zw);
                 if rsq>obj.rw^2
-                    omega=obj.Q/(2*pi)*log(z-obj.zw);
+                    omega=1/(2*pi)*log(z-obj.zw);
                 else
-                     omega = 0;
+                     omega = obj.Phi;
 
                 end
             

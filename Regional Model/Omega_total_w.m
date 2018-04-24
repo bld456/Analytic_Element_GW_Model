@@ -6,7 +6,7 @@ omega  = 0;
 
 for j = 1:model.nSinks +1
     if j == model.nSinks +1
-        omega = omega + s(j);
+        omega = omega + s(length(s));
     else        
   
         omega = omega + model.Sinks(j).Omega(z,s(j));
@@ -14,7 +14,7 @@ for j = 1:model.nSinks +1
 end
 
 for i = 1:length(wells)
-   omega = omega + wells(i).Omega(z);
+   omega = omega + s(i + model.nSinks)*wells(i).Omega(z);
 
 end
 end

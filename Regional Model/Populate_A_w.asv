@@ -7,7 +7,7 @@ nColumns = model.nSinks +nWells+ 1;
 A =zeros (nRows,nColumns);
 
 %
-A(:,nColumns) = 1;
+
 % 
 
 count_riverSinks = 0;
@@ -19,32 +19,35 @@ for r = 1:model.nRivers
     end
 end
 
+count_lakeSinks = model.nSinks - count_riverSinks;
 
 %add each river row 
 for r = 1:count_riverSinks 
    for c = 1:nColumns-1
        z =  model.Sinks(r).mp;
       
-       if c > model.nSinks
+       if c == nColumns
+            A(r,c) = 1;
+       elseif c > model.nSinks
             A(r,c) = real(Wells(c-model.nSinks).Omega(z));
        else
            A(r,c) =real(model.Sinks(c).Omega(z));
        end
    end
 end
+%add the lake rows (with subtractions)
+
+
+%ad one to the index, check if they are both in the same LIneSink matrix 
 
 
 
-
-
- %lake rows
+ 
  for r = count_riverSinks+1:model.nSinks
      for c = 1:(nColumns-1)
          z = model.Sinks(r).mp;
-         if r ==1
-            z2 = model.Sinks(r+1).mp;
-
-         elseif model.Sinks(r).z1 == model.Sinks(r-1).z2
+         
+         if model.Sinks(r).z1 == model.Sinks(r-1).z2
              z2 = model.Sinks(r-1).mp;
          else
              z2 = model.Sinks(r+1).mp;
@@ -59,46 +62,12 @@ end
  end
  
 
- %well rows
+ 
  
  for r = model.nSinks +1 : model.nSinks+ nWells
       for c = 1:(nColumns-1)
-           z =  Wells(r-(model.nSinks )).zw;
-      
-       if c > model.nSinks
-            A(r,c) = real(Wells(c-model.nSinks).Omega(z));
-       else
-           A(r,c) =real(model.Sinks(c).Omega(z));
-       end
+          
       end
- end
- 
- %refrence point row
- for c = 1:(nColumns-1)
-           z = refZ;
-      
-       if c > model.nSinks
-            A(nRows-model.nLakes,c) = real(Wells(c-model.nSinks).Omega(z));
-       else
-           A(nRows-model.nLakes,c) =real(model.Sinks(c).Omega(z));
-       end
- 
- 
- end
- 
- 
- for r = (nRows - model.nLakes)+1 :nRows
-     for c = 1:(model.nSinks)
-     
-     
-     if ismember(model.Sinks(c),  model.Lakes(model.nLakes - (nRows-r)).LineSinks)
-         
-         A(r,c) = 1;
-     else
-         A(r,c) = 0;
-     end
-     end
-     A(r,end) = 0;
  end
  
 end

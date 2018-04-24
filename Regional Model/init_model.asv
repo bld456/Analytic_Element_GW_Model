@@ -5,16 +5,16 @@
 %
 
 
-refPhi = 25*25*.5*10;
-refz = 0;
+refPhi = 5;
+refz = 1000;
 
- model = Model();
-%   river = River('river1.csv');
-%  river.setPhi(0);
-%   model.addRiver(river);
+model = Model();
+%  river = River('river1.csv');
+% river.setPhi(0);
+%  model.addRiver(river);
 
 
-lake = Lake('lake1.csv');
+ lake = Lake('lake1.csv');
  model.addLake(lake);
  lake.setPhi(25*25*.5*10 );
 % 
@@ -27,8 +27,8 @@ lake = Lake('lake1.csv');
 % wells(2) = well2;
 
 %% Lake level cant vary
-b = Populate_b(model, refPhi) 
-A = Populate_A(model,refz)
+b = Populate_b(model, refPhi); 
+A = Populate_A(model,refz);
 s= A\b;
 ContourMe_flow_net(-400,400 , 100, -400, 400, 100, @(z)Omega_total(z,model,s),50);
 
@@ -54,8 +54,8 @@ end
 
 %allow lake level to vary
 
-A = Populate_A_w(model,refz,[])
-b = Populate_b_w(model, refPhi,[],Ql)
+A = Populate_A_w(model,refz,[]);
+b = Populate_b_w(model, refPhi,[],Ql);
 
 s2 = A\b;
 ContourMe_flow_net(-400,400,100, -400,400,100,@(z)Omega_total_w(z,model,s2,[]),50);

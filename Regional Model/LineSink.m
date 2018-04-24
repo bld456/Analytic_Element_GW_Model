@@ -9,6 +9,7 @@ classdef LineSink < handle
         L
         PhiM
         mp
+        sigma
     end
     
     methods
