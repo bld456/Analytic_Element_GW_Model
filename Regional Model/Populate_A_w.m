@@ -39,9 +39,9 @@ end
 
  %lake rows
  for r = count_riverSinks+1:model.nSinks
-     for c = 1:(nColumns-1)
-         z = model.Sinks(r).mp;
-         if r ==1
+    z = model.Sinks(r).mp;
+    
+     if r ==1
             z2 = model.Sinks(r+1).mp;
 
          elseif model.Sinks(r).z1 == model.Sinks(r-1).z2
@@ -49,12 +49,17 @@ end
          else
              z2 = model.Sinks(r+1).mp;
          end
+     for c = 1:(nColumns-1)
+
          
          if c > model.nSinks
              A(r,c) =  real(Wells(c-model.nSinks).Omega(z) - Wells(c-model.nSinks).Omega(z2));
         else
             A(r,c) =real(model.Sinks(c).Omega(z) - model.Sinks(c).Omega(z2))   ;
-      end
+      
+         
+         end
+
      end
  end
  
