@@ -9,7 +9,7 @@ for j = 1:model.nSinks +1
         omega = omega + s(length(s));
     else        
   
-        omega = omega + model.Sinks(j).Omega(z,s(j));
+        omega = omega + model.Sinks(j).Omega(z)*s(j);
     end
 end
 

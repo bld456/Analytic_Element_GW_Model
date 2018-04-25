@@ -6,12 +6,12 @@
 
 
 model = Model();
- river = River('river1.csv');
+ river = River('Elements/Rivers/river1.csv');
 river.setPhi(0);
  model.addRiver(river);
 
 
-lake = Lake('lake1.csv');
+lake = Lake('Elements/Lakes/lake1.csv');
 model.addLake(lake);
 lake.setPhi (100);
 

@@ -11,15 +11,13 @@ refz =  4.6390e+05+ 4.9765e+06i;
 
 
 
-mississippi = River('miss+mn.csv');
-%minnesota = River('minnesota.csv');
-hiawatha = Lake('hiawatha.csv');
-nokomis = Lake ('nokomis.csv');
-taft = Lake('mother.csv');
-mother =Lake('taft.csv');
-minnetonka=Lake('minnetonka.csv');
+mississippi = River('Elements/Rivers/miss+mn.csv');
+hiawatha = Lake('Elements/Lakes/hiawatha.csv');
+nokomis = Lake ('Elements/Lakes/nokomis.csv');
+taft = Lake('Elements/Lakes/taft.csv');
+mother =Lake('Elements/Lakes/mother.csv');
+minnetonka=Lake('Elements/Lakes/minnetonka.csv');
 
-%minnesota.setPhi(0);
 mississippi.setPhi(0);
 
 hiawatha.setPhi(247.22*247.22*.5*152.4);
@@ -29,7 +27,6 @@ mother.setPhi(248.54*248.54*.5*152.4);
 minnetonka.setPhi(282.08*282.08*.5*152.4);
 
 model.addRiver(mississippi);
-%model.addRiver(minnesota);
 model.addLake(nokomis);
 model.addLake(hiawatha);
  model.addLake(mother);
@@ -43,7 +40,7 @@ A = Populate_A(model,refz);
 
 s= A\b;
 
-ContourMe_flow_net(476800,487600 , 400, 4965500, 4976400, 400, @(z)Omega_total(z,model,s),100);
+ContourMe_flow_net(476800,487600 , 400, 4965500, 4976400, 400, @(z)Omega_total(z,model,s),500);
 mississippi.plotElement()
 nokomis.plotElement()
 hiawatha.plotElement()

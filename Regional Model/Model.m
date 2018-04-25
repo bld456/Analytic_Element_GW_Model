@@ -7,11 +7,14 @@ classdef Model < handle
         nLakes
         nSinks
         nElements
+        nWells
+        
         
         Elements
         Rivers
         Lakes
         Sinks
+        Wells
         
     end
     
@@ -24,6 +27,7 @@ classdef Model < handle
             obj.Lakes = Lake.empty(0);
             obj.nElements = 0;
             obj.Elements = ModelElement.empty(0);
+            obj.Wells = Well.empty(0);
 
         end
         
@@ -51,6 +55,14 @@ classdef Model < handle
         
         
         end
+        
+        function addWell(obj,well)
+          obj.nWells= obj.nWells +1 ;
+          obj.Wells(obj.nWells) = well ;
+        
+        
+        end
+    
         
         function sinks = listSinks(obj)
             
