@@ -1,4 +1,4 @@
-function [ omega ] = Omega_total( z, model, s )
+function [ omega ] = Omega_total( z, model, s,gamma0,L,z_infil_1, Logfac,eps )
 %OMEGA_TOTAL Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -9,7 +9,7 @@ for j = 1:model.nSinks +1
         omega = omega + s(j);
     else        
   
-        omega = omega + model.Sinks(j).Omega(z) * s(j);
+        omega = omega + model.Sinks(j).Omega(z) * s(j) +  Phi_Area_sink(z,gamma0,L,z_infil_1, Logfac,eps);
     end
 end
 end
