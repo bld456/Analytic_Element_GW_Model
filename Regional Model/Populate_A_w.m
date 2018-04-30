@@ -98,7 +98,7 @@ end
      
      if ismember(model.Sinks(c),  model.Lakes(model.nLakes - (nRows-r)).LineSinks)
          
-         A(r,c) = 1;
+         A(r,c) = model.Sinks(c).L;%needs to be LS length
      else
          A(r,c) = 0;
      end

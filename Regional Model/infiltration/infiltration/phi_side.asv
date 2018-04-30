@@ -1,8 +1,0 @@
-function [Phi] = phi_side(z,z1,z2,L,eps,logfac)
-%PHI_SIDE Summary of this function goes here
-%   Detailed explanation goes here
-Z = Calculate_Z(Z,z1,z2)
-if 
-Phi = 
-end
-

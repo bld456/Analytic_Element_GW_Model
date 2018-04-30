@@ -35,6 +35,6 @@ for row = 1:Ny
         Grid(row,col) = func( complex( X(col), Y(row) ) );
     end
 end
-contour(X, Y, real(Grid),nint);
+contour(X, Y, real(Grid),nint );
 axis equal
 hold on

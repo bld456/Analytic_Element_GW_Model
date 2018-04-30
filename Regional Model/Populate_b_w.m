@@ -1,4 +1,4 @@
-function [B ] = Populate_b_w( model, refPhi,Wells,Ql)
+function [B ] = Populate_b_w( model, refPhi,Wells,Ql,gamma0,L,z_infil_1, Logfac,eps ,refZ)
 %POPULATE_B Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,7 @@ nLakes = model.nLakes;
 nRivers = model.nRivers;
 nWells = length(Wells);
 
-nRows = model.nSinks +1 + nLakes;
+nRows = model.nSinks +1 + nLakes + nWells;
 
 B = zeros(nRows  ,1);
 
@@ -24,7 +24,7 @@ for r = 1:nRivers
        
 end
 
-
+%lakes
 for r = 1:nLakes
   for j = 1:length(model.Lakes(r).LineSinks)
  
@@ -45,8 +45,9 @@ for r = 1:nWells
 end
 
  
+%constant
+B(c ,1 ) = real(refPhi )- Phi_Area_sink(refZ,gamma0,L,z_infil_1, Logfac,eps);;
 
-B(c ,1 ) = real(refPhi );
 c = c+1;
 
 
@@ -56,4 +57,8 @@ for r = 1:nLakes
     c = c+1;
 end
 
+%include infiltration
+for r = 1:nRivers + nLakes + nWells 
+B(r,1) = B(r,1) - Phi_Area_sink(model.Sinks(r).mp,gamma0,L,z_infil_1, Logfac,eps);
+end
 end
