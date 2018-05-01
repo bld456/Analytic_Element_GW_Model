@@ -50,7 +50,7 @@ for r = 1:c-1
     if r < model.nSinks +1
         B(r,1) = B(r,1) - Phi_Area_sink(model.Sinks(r).mp,gamma0,L,z_infil_1, Logfac,eps);
     else
-        B(r,1) = B(r,1) - Phi_Area_sink(Wells(r - model.nSinks).z,gamma0,L,z_infil_1, Logfac,eps);
+        B(r,1) = B(r,1) - Phi_Area_sink(Wells(r - model.nSinks).zw,gamma0,L,z_infil_1, Logfac,eps);
     end
 end 
 

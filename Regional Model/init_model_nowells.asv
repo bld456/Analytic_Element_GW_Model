@@ -19,8 +19,8 @@ model = Model();
 %need to add path to infiltration and make sure there are no duplicate
 %methodsn    
 
-refPhi = 318*318*.5*152.4; 
-refz =  4.6400e+05+ 4.9765e+06i;
+refPhi = 500^2*.5*152.4; 
+refz =  4.7000e+05+ 4.97e+06i;
 
 
 %%initialize infiltration area and strength
@@ -42,7 +42,7 @@ hiawatha = Lake('Elements/Lakes/hiawatha.csv');
 nokomis = Lake ('Elements/Lakes/nokomis.csv');
 taft = Lake('Elements/Lakes/taft.csv');
 mother =Lake('Elements/Lakes/mother.csv');
-minnetonka=Lake('Elements/Lakes/minnetonka.csv');
+minnetonka=Lake('Elements/Lakes/minnetonka.csv'); 
 
 mississippi.setPhi(0);
 hiawatha.setPhi(247.22*247.22*.5*152.4);
@@ -67,13 +67,17 @@ b = Populate_b(model, refPhi,gamma0,L,z_infil_1, Logfac,eps,refz);
 A = Populate_A(model,refz);
 
 s= A\b;
-%ContourMe_R_int(xmin,xmax,400,ymin,ymax,400, @(z)real(Omega_total(z,model,s,gamma0,L,z_infil_1, Logfac,eps)),100);
+%ContourMe_R_int(xmin,xmax,400,ymin,ymax,400, @(z)real(Omega_total(z,model,s,gamma0,L,z_infil_1, Logfac,eps)),30);
 mississippi.plotElement()
 nokomis.plotElement()
 hiawatha.plotElement()
 taft.plotElement()
 mother.plotElement()
 minnetonka.plotElement()
+
+
+
+%% add a new section where the line sink strengths stay constant 
 
 
 for i = 1:model.nSinks
@@ -87,7 +91,7 @@ Ql = zeros(model.nLakes,1);
 for i = 1:model.nLakes
     for j = 1:length(model.Lakes(i).LineSinks)
     
-    Ql(i) = Ql(i) + model.Lakes(i).LineSinks(j).sigma;
+    Ql(i) = Ql(i) + model.Lakes(i).LineSinks(j).sigma * model.Lakes(i).LineSinks(j).L;
     end
 end
 
@@ -103,15 +107,16 @@ s2 = A\b;
 
 %check the quality of the refrence point
 
-miss_dif = Omega_total_w(mississippi.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) -mississippi.Phi
-nokomis_dif =Omega_total_w(nokomis.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - nokomis
-hiawatha_dif =Omega_total_w(hiawatha.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
-taft_dif =Omega_total_w(taft.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
-mother_dif=Omega_total_w(mother.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
-tonka_dif =Omega_total_w(minnetonka.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
+miss_dif = Omega_to_phi_UNC((Omega_total_w(mississippi.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - mississippi.Phi),152.4)
+nokomis_dif =Omega_to_phi_UNC((Omega_total_w(nokomis.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - nokomis.Phi),152.4)
+hiawatha_dif =Omega_to_phi_UNC((Omega_total_w(hiawatha.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - hiawatha.Phi),152.4)
+taft_dif =Omega_to_phi_UNC((Omega_total_w(taft.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - taft.Phi),152.4)
+mother_dif=Omega_to_phi_UNC((Omega_total_w(mother.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - mother.Phi),152.4)
+tonka_dif =Omega_to_phi_UNC((Omega_total_w(minnetonka.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps) - minnetonka.Phi),152.4)
+
 
 %
-
+% ContourMe_R_int(440000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)),30);
 %Omega_total_w(mississippi.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
 % %ContourMe_flow_net(476800,487600 , 400, 4965500, 4976400, 400,@(z)Omega_total_w(z,model,s2,[]),200);
 % 
@@ -122,4 +127,18 @@ tonka_dif =Omega_total_w(minnetonka.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil
 % mother.plotElement()
 % minnetonka.plotElement()
 
+
+
+testWell = Well(50, 4.55*10^5,4.965*10^6,10);
+Wells = Well.empty(0); 
+Wells(1) = testWell;
+
+Aw = Populate_A_w(model,refz,Wells);
+bw = Populate_b_w(model, refPhi,Wells,Ql,gamma0,L,z_infil_1, Logfac,eps ,refz);
+sw = Aw\bw;
+ ContourMe_R_int(440000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,sw,Wells,gamma0,L,z_infil_1, Logfac,eps)),30);
+
+ compPoint = testWell.zw + 10
+ no_well =Omega_total_w(compPoint,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
+ well = Omega_total_w(compPoint,model,sw,Wells,gamma0,L,z_infil_1, Logfac,eps)
 
