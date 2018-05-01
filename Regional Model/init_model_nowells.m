@@ -116,7 +116,7 @@ tonka_dif =Omega_to_phi_UNC((Omega_total_w(minnetonka.LineSinks(1).mp,model,s2,[
 
 
 %
-ContourMe_R_int(440000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)),30);
+ ContourMe_R_int(440000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)),30);
 %Omega_total_w(mississippi.LineSinks(1).mp,model,s2,[],gamma0,L,z_infil_1, Logfac,eps)
 % %ContourMe_flow_net(476800,487600 , 400, 4965500, 4976400, 400,@(z)Omega_total_w(z,model,s2,[]),200);
 % 

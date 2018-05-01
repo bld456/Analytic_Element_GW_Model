@@ -40,7 +40,7 @@ end
  %lake rows
  for r = count_riverSinks+1:model.nSinks
     z = model.Sinks(r).mp;
-    
+%     
 %      if r ==1
 %             z2 = model.Sinks(r+1).mp;
 % 
@@ -49,14 +49,8 @@ end
 %          else
 %              z2 = model.Sinks(r+1).mp;
 %          end
-        
 
-        for l = 1:model.nLakes
-            if ismember(model.Sinks(r), model.Lakes(l).LineSinks)
-        z2 = model.Lakes(l).LineSinks(1).mp;
-            end
-        end
-        
+        Z2 = model.Sinks(r).mp
      for c = 1:(nColumns-1)
 
          
@@ -67,7 +61,7 @@ end
       
          
          end
-           A(r,nColumns) = 0; %constants cancel out
+
      end
  end
  
