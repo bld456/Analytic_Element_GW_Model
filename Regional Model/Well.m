@@ -24,6 +24,7 @@ classdef Well
         
         function omega = Omega(obj,z)
             rsq=(z-obj.zw)*conj(z-obj.zw);
+        
                 if rsq>obj.rw^2
                     omega=1/(2*pi)*log(z-obj.zw);
                 else

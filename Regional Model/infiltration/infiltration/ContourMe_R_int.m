@@ -37,4 +37,3 @@ for row = 1:Ny
 end
 contour(X, Y, real(Grid),nint );
 axis equal
-hold on

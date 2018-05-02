@@ -76,7 +76,7 @@ end
  
  for r = model.nSinks +1 : model.nSinks+ nWells
       for c = 1:(nColumns-1)
-           z =  Wells(r-(model.nSinks )).zw;
+           z =  Wells(r-(model.nSinks )).zw +Wells(r-(model.nSinks )).rw ;
       
        if c > model.nSinks
             A(r,c) = real(Wells(c-model.nSinks).Omega(z));
