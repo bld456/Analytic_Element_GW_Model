@@ -38,7 +38,7 @@ end
 
 for r = 1:nWells
     
-    Wells(r)
+  
 
     B(c,1) = real(Wells(r).Phi);
     c = c+1;

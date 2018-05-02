@@ -1,18 +1,30 @@
 
-
-%include wells
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
+%NO WELLS
+%%%%%%%%%%%%%%%%%%%
 
 
+xmin = 476800;
+xmax =487600 ; 
+
+ymin =  4965500 ;
+ymax = 4976400;
 
 
-refPhi = 100;
-refz =  1000;
+
+
+model = Model();
+
+
+
+%need to add path to infiltration and make sure there are no duplicate
+%methodsn    
+
+refPhi = 500^2*.5*152.4; 
+refz =  4.7000e+05+ 4.97e+06i;
 
 
 %%initialize infiltration area and strength
-gamma0 =0;%m/day (6 inches per year)
+gamma0 =-.0004 ;%m/day (6 inches per year)
 eps = 10^-5;
 z_infil_1 = [];
 z_infil_1(1)= 440000+ 1i*4960000;
@@ -24,37 +36,48 @@ L = Calculate_Larray(z_infil_1);
 Logfac = logfac(z_infil_1);
 
 
+%add major elements to the model
+mississippi = River('Elements/Rivers/miss+mn.csv');
+hiawatha = Lake('Elements/Lakes/hiawatha.csv');
+nokomis = Lake ('Elements/Lakes/nokomis.csv');
+taft = Lake('Elements/Lakes/taft.csv');
+mother =Lake('Elements/Lakes/mother.csv');
+minnetonka=Lake('Elements/Lakes/minnetonka.csv'); 
 
+mississippi.setPhi(0);
+hiawatha.setPhi(247.22*247.22*.5*152.4);
+nokomis.setPhi(248.09*248.09*.5*152.4);
+taft.setPhi(248.59*248.59*.5*152.4);
+mother.setPhi(248.54*248.54*.5*152.4);
+minnetonka.setPhi(282.08*282.08*.5*152.4);
 
+model.addRiver(mississippi);
+model.addLake(nokomis);
+model.addLake(hiawatha);
+model.addLake(mother);
+model.addLake(taft);
+model.addLake(minnetonka);
 
-
-
- model = Model();
- river = River('Elements/Rivers/river1.csv');
-river.setPhi(60);
- model.addRiver(river);
-
-
-lake = Lake('Elements/Lakes/lake1.csv');
-model.addLake(lake);
-lake.setPhi (100);
 
 b = Populate_b(model, refPhi,gamma0,L,z_infil_1, Logfac,eps,refz); 
-
 
 %need to keep the strength of minnetonak constant by putting it in the B
 %matrix, then move the refrence point around to get the right value along
 %lake obundaries. Im close :)
-A = Populate_A( model,refz); 
+A = Populate_A(model,refz);
 
 s= A\b;
-% 
-% ContourMe_R_int(-500,500,100,-500,500,100, @(z)real(Omega_total(z,model,s,gamma0,L,z_infil_1, Logfac,eps)),30);
-% % 
+%ContourMe_R_int(xmin,xmax,400,ymin,ymax,400, @(z)real(Omega_total(z,model,s,gamma0,L,z_infil_1, Logfac,eps)),30);
+mississippi.plotElement()
+nokomis.plotElement()
+hiawatha.plotElement()
+taft.plotElement()
+mother.plotElement()
+minnetonka.plotElement()
 
-lake.plotElement()
-river.plotElement()
 
+
+%% add a new section where the line sink strengths stay constant 
 
 
 for i = 1:model.nSinks
@@ -73,24 +96,48 @@ for i = 1:model.nLakes
 end
 
 
+w = csvread('Data Collection/wells.csv');
+
+Wells = Well.empty(length(w),0);
+
+rw = .2; %temporary
+for i = 1: length(w)
+
+Wells(i) = Well(w(i,3)^2 * .5 * 152.4,w(i,1),w(i,2),rw);
+
+end
 
 
 
 
 
 
-%%%turn on wells
+
+%%incorporate allowing lake levels to change
+A = Populate_A_w(model,refz,Wells);
+b = Populate_b_w(model, refPhi,Wells,Ql,gamma0,L,z_infil_1, Logfac,eps ,refz);
+
+s2 = A\b;
 
 
-well1 =Well(10,300,300,.3);
-wells  = Well.empty(0);
-wells(1) = well1;
+%check the quality of the refrence point
+
+miss_dif = Omega_to_phi_UNC((Omega_total_w(mississippi.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - mississippi.Phi),152.4)
+nokomis_dif =Omega_to_phi_UNC((Omega_total_w(nokomis.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - nokomis.Phi),152.4)
+hiawatha_dif =Omega_to_phi_UNC((Omega_total_w(hiawatha.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - hiawatha.Phi),152.4)
+taft_dif =Omega_to_phi_UNC((Omega_total_w(taft.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - taft.Phi),152.4)
+mother_dif=Omega_to_phi_UNC((Omega_total_w(mother.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - mother.Phi),152.4)
+tonka_dif =Omega_to_phi_UNC((Omega_total_w(minnetonka.LineSinks(1).mp,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps) - minnetonka.Phi),152.4)
 
 
+%
+ContourMe_R_int(479000,483000,100,4968000,4972500,100, @(z)real(Omega_total_w(z,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps)),100);
+
+%ContourMe_R_int(440000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps)),30);
+%ContourMe_R_int(470000,490000,100,4960000,4990000,100, @(z)real(Omega_total_w(z,model,s2,Wells,gamma0,L,z_infil_1, Logfac,eps)),100);
+hold on 
+for i = 1: length(w)
 
 
-Aw = Populate_A_w(model,refz,wells);
-bw = Populate_b_w(model, refPhi,wells,Ql,gamma0,L,z_infil_1, Logfac,eps ,refz);
-sw = Aw\bw;
-ContourMe_R_int(-500,500,100,-500,500,100, @(z)real(Omega_total_w(z,model,sw,wells,gamma0,L,z_infil_1, Logfac,eps)),100);
-
+plot(real(Wells(i).zw),imag(Wells(i).zw),'*r')
+end
