@@ -7,7 +7,7 @@
 
 
 
-refPhi = 100;
+refPhi = 6;
 refz =  1000;
 
 

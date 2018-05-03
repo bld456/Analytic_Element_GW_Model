@@ -35,5 +35,8 @@ for row = 1:Ny
         Grid(row,col) = func( complex( X(col), Y(row) ) );
     end
 end
+
+figure;
+hold on
 contour(X, Y, real(Grid),nint );
 axis equal

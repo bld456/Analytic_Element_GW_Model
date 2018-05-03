@@ -10,7 +10,7 @@ ymax = 4976400;
 
 model = Model();
 
-gamma0 = .0004 ;%m/day (6 inches per year)
+gamma0 =- .0004 ;%m/day (6 inches per year)
 eps = 10^-5;
 
 %need to add path to infiltration and make sure there are no duplicate
