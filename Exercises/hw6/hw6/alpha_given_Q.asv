@@ -1,9 +1,0 @@
-function [a1pha] = alpha_given_Q(zl,rl,Ql,phi, w0)
-
-for i = 1:length(zl)
-refz = zl(i)+rl(i)
-aplha(i) =sqrt((z-zl(i))^2 *(phi(i) + w0*refz+ conj(w0) * rl(i)*rl(i)/(refz-zl(i) -(Ql(i)/(2*pi)) * ln((refz-zl(i))/rl(i)) )  )) ;
-
-end
-end
-

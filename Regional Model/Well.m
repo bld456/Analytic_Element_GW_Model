@@ -28,7 +28,7 @@ classdef Well
                 if rsq>obj.rw^2
                     omega=1/(2*pi)*log(z-obj.zw);
                 else
-                     omega = obj.Phi;
+                     omega = NaN;
 
                 end
             
